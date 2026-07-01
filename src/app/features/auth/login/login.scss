@@ -1,0 +1,212 @@
+/* Variables para el gradiente animado de fondo */
+:host {
+  display: block;
+  min-height: 100vh;
+  /* Paleta ultra-premium, oscura con toques vibrantes */
+  --bg-color-1: #060e14;
+  --bg-color-2: #0a1f24;
+  --bg-color-3: #113636;
+  --bg-color-4: #05221f;
+
+  --brand-color: #00d2b5;
+  --brand-hover: #00ebd0;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xxl) var(--space-lg);
+  position: relative;
+  overflow: hidden;
+
+  /* Fondo oscuro y profundo animado */
+  background: linear-gradient(125deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), var(--bg-color-4));
+  background-size: 400% 400%;
+  animation: gradientFlow 20s ease infinite;
+
+  /* Restricción de ancho para la card */
+  &>app-dynamic-form {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 10;
+
+    ::ng-deep .form-shell {
+      /* Auténtico Glassmorphism Premium */
+      background: rgba(14, 25, 30, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 210, 181, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+    }
+
+    ::ng-deep .form-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    ::ng-deep .form-header .title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    ::ng-deep .form-header .subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    ::ng-deep .form {
+      grid-template-columns: 1fr !important;
+      gap: 1.5rem;
+    }
+
+    /* Sobreescribiendo estilos de inputs en el padre para mayor pureza */
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background: rgba(0, 0, 0, 0.25) !important;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+
+    ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+      background: rgba(0, 0, 0, 0.4) !important;
+    }
+
+    ::ng-deep .mdc-notched-outline__leading,
+    ::ng-deep .mdc-notched-outline__notch,
+    ::ng-deep .mdc-notched-outline__trailing {
+      border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+    ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+    ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+      border-color: var(--brand-color) !important;
+      border-width: 2px !important;
+    }
+
+    ::ng-deep .mat-mdc-input-element {
+      color: #ffffff !important;
+    }
+
+    ::ng-deep .mdc-floating-label {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field.mat-focused .mdc-floating-label {
+      color: var(--brand-color) !important;
+    }
+
+    /* Corregir contraste de errores (rojo brillante legible en oscuro) */
+    ::ng-deep .mat-mdc-form-field-error {
+      color: #ff5e6d !important;
+    }
+
+    /* Ocultar el subtítulo "Este campo es obligatorio" que sale duplicado por defecto si lo hay */
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      margin-top: 4px;
+    }
+
+    ::ng-deep .actions {
+      justify-content: center;
+      margin-top: 1.5rem;
+
+      .btn-primary {
+        width: 100%;
+        padding: 1.6rem 0;
+        border-radius: 14px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #000000 !important;
+        background: linear-gradient(135deg, var(--brand-color), #00a896) !important;
+        border: none;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        text-transform: uppercase;
+
+        &:hover {
+          transform: translateY(-2px);
+          background: linear-gradient(135deg, var(--brand-hover), #00beaa) !important;
+          box-shadow: 0 10px 25px rgba(0, 210, 181, 0.3);
+        }
+
+        &:active {
+          transform: translateY(1px);
+          box-shadow: 0 5px 10px rgba(0, 210, 181, 0.2);
+        }
+      }
+
+      .btn-secondary {
+        display: none;
+      }
+    }
+  }
+}
+
+/* Luces esféricas de fondo para contraste dinámico */
+.page-wrapper::before,
+.page-wrapper::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 1;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.page-wrapper::before {
+  width: 500px;
+  height: 500px;
+  background-color: rgba(0, 180, 150, 0.15);
+  top: -150px;
+  left: -150px;
+  animation: floatOrb 12s ease-in-out infinite alternate;
+}
+
+.page-wrapper::after {
+  width: 600px;
+  height: 600px;
+  background-color: rgba(0, 100, 255, 0.08);
+  /* Un toque frío para balancear el verde */
+  bottom: -200px;
+  right: -100px;
+  animation: floatOrb 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(40px, -40px) scale(1.05);
+  }
+
+  100% {
+    transform: translate(-20px, 40px) scale(0.95);
+  }
+}

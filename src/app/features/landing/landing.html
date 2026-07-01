@@ -1,0 +1,409 @@
+<!-- Navbar -->
+<header class="header">
+  <nav class="landing-container nav-content">
+    <!-- Logo -->
+    <a [routerLink]="[]" class="logo">
+      <div class="logo-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-calendar-check"
+        >
+          <path d="M8 2v4" />
+          <path d="M16 2v4" />
+          <rect width="18" height="18" x="3" y="4" rx="2" />
+          <path d="M3 10h18" />
+          <path d="m9 16 2 2 4-4" />
+        </svg>
+      </div>
+      <span class="logo-text">TeamPlate</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="desktop-links">
+      <li *ngFor="let link of navLinks">
+        <a [routerLink]="[]" [fragment]="link.href.replace('#', '')" class="nav-link">{{
+          link.label
+        }}</a>
+      </li>
+    </ul>
+
+    <!-- CTA desktop -->
+    <div class="desktop-cta">
+      <a [routerLink]="['/login']" class="login-link">Iniciar sesión</a>
+      <a [routerLink]="['/register']" class="signup-button">Registrarse</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button class="mobile-toggle" (click)="toggleMenu()">
+      <svg
+        *ngIf="!mobileOpen"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-menu"
+      >
+        <line x1="4" x2="20" y1="12" y2="12" />
+        <line x1="4" x2="20" y1="6" y2="6" />
+        <line x1="4" x2="20" y1="18" y2="18" />
+      </svg>
+      <svg
+        *ngIf="mobileOpen"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-x"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div *ngIf="mobileOpen" class="mobile-menu">
+    <ul class="mobile-links">
+      <li *ngFor="let link of navLinks">
+        <a
+          [routerLink]="[]"
+          [fragment]="link.href.replace('#', '')"
+          (click)="closeMenu()"
+          class="mobile-nav-link"
+          >{{ link.label }}</a
+        >
+      </li>
+    </ul>
+    <div class="mobile-cta">
+      <a [routerLink]="['/login']" (click)="closeMenu()" class="mobile-login-link"
+        >Iniciar sesión</a
+      >
+      <a [routerLink]="['/register']" (click)="closeMenu()" class="mobile-signup-button"
+        >Registrarse</a
+      >
+    </div>
+  </div>
+</header>
+
+<main class="page-content">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="landing-container">
+      <div class="hero-content-wrapper">
+        <div class="hero-text-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text">Plataforma #1 en gestión de reservas</span>
+          </div>
+          <h1 class="hero-title">
+            Gestiona reservas y turnos de tu restaurante
+            <span class="text-primary">sin complicaciones</span>
+          </h1>
+          <p class="hero-description">
+            Optimiza la ocupación de mesas, reduce las ausencias y ofrece a tus empleados una
+            experiencia de reserva impecable.
+          </p>
+          <div class="hero-ctas">
+            <a [routerLink]="['/register']" class="btn btn-primary">
+              Registrarse
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-right"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+            <a [routerLink]="[]" [fragment]="'como-funciona'" class="btn btn-outline"
+              >Ver cómo funciona</a
+            >
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="dashboard-preview">
+            <img
+              src="assets/images/hero-restaurant.png"
+              alt="Interior de restaurante moderno"
+              class="preview-img"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo Bar -->
+  <section class="logo-bar">
+    <div class="landing-container">
+      <p class="logo-title">Restaurantes que confían en TeamPlate</p>
+      <div class="brands-grid">
+        <span *ngFor="let brand of brands" class="brand-item">{{ brand }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="funcionalidades" class="features">
+    <div class="landing-container">
+      <div class="features-header">
+        <p class="section-tag">Funcionalidades</p>
+        <h2 class="section-title">Todo lo que necesitas para gestionar tu restaurante</h2>
+      </div>
+      <div class="features-grid">
+        <div *ngFor="let feature of features" class="feature-card group">
+          <div class="feature-icon-wrapper transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path [attr.d]="feature.iconPath"></path>
+            </svg>
+          </div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section id="como-funciona" class="how-it-works">
+    <div class="landing-container">
+      <div class="steps-header">
+        <p class="section-tag">Cómo funciona</p>
+        <h2 class="section-title">Empieza a recibir reservas en 3 pasos</h2>
+      </div>
+      <div class="steps-grid">
+        <div *ngFor="let step of steps; let i = index; let last = last" class="step-item">
+          <div *ngIf="!last" class="connector-line"></div>
+          <div class="step-icon-circle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path [attr.d]="step.iconPath"></path>
+            </svg>
+          </div>
+          <span class="step-badge">Paso {{ step.number }}</span>
+          <h3 class="step-title">{{ step.title }}</h3>
+          <p class="step-description">{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="landing-container">
+      <div class="stats-box">
+        <div class="stats-grid">
+          <div *ngFor="let stat of stats" class="stat-item">
+            <p class="stat-value">{{ stat.value }}</p>
+            <p class="stat-label">{{ stat.label }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonios" class="testimonials">
+    <div class="landing-container">
+      <div class="testimonials-header">
+        <p class="section-tag">Testimonios</p>
+        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div *ngFor="let t of testimonials" class="testimonial-card">
+          <div class="quote-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-quote"
+            >
+              <path
+                d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
+              />
+              <path
+                d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
+              />
+            </svg>
+          </div>
+          <div class="rating-stars">
+            <svg
+              *ngFor="let i of starsArray(t.rating)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-primary"
+            >
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+              />
+            </svg>
+          </div>
+          <blockquote class="testimonial-quote">"{{ t.quote }}"</blockquote>
+          <div class="testimonial-author">
+            <p class="author-name">{{ t.name }}</p>
+            <p class="author-role">{{ t.role }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="precios" class="pricing">
+    <div class="landing-container">
+      <div class="pricing-header">
+        <p class="section-tag">Precios</p>
+        <h2 class="section-title">Planes que se adaptan a tu negocio</h2>
+      </div>
+      <div class="pricing-grid">
+        <div *ngFor="let plan of plans" class="pricing-card" [class.popular-card]="plan.popular">
+          <div *ngIf="plan.popular" class="popular-badge">Más popular</div>
+          <h3 class="plan-name">{{ plan.name }}</h3>
+          <div class="plan-price-wrapper">
+            <span class="price-value" *ngIf="plan.price !== 'Personalizado'"
+              >${{ plan.price }}</span
+            >
+            <span class="price-custom" *ngIf="plan.price === 'Personalizado'">{{
+              plan.price
+            }}</span>
+            <span class="price-period" *ngIf="plan.price !== 'Personalizado'">/mes</span>
+          </div>
+          <ul class="plan-features">
+            <li *ngFor="let feature of plan.features" class="feature-item">
+              <svg
+                class="check-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>{{ feature }}</span>
+            </li>
+          </ul>
+          <a
+            [routerLink]="['/register']"
+            class="plan-cta"
+            [class.cta-primary]="plan.popular"
+            [class.cta-outline]="!plan.popular"
+            >{{ plan.cta }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="landing-container">
+    <div class="footer-grid">
+      <div class="brand-column">
+        <a [routerLink]="[]" class="logo">
+          <div class="logo-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-calendar-check"
+            >
+              <path d="M8 2v4" />
+              <path d="M16 2v4" />
+              <rect width="18" height="18" x="3" y="4" rx="2" />
+              <path d="M3 10h18" />
+              <path d="m9 16 2 2 4-4" />
+            </svg>
+          </div>
+          <span class="logo-text">TeamPlate</span>
+        </a>
+        <p class="brand-description">La plataforma más completa para la gestión de restaurantes.</p>
+      </div>
+      <div *ngFor="let section of footerSections" class="link-column">
+        <h4 class="column-title">{{ section.title }}</h4>
+        <ul class="footer-links">
+          <li *ngFor="let link of section.links">
+            <a
+              [routerLink]="[]"
+              [fragment]="link.href.startsWith('#') ? link.href.substring(1) : undefined"
+              class="footer-link"
+              >{{ link.label }}</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="copyright">© {{ currentYear }} TeamPlate. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

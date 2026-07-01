@@ -1,0 +1,258 @@
+/* =========================
+   PAGE LAYOUT
+   ========================= */
+.profile-page {
+  padding: var(--space-xxl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: 960px;
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-xxl) 0;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--principal-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-principal);
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--principal-color);
+    }
+  }
+}
+
+/* =========================
+   ROLE BADGE
+   ========================= */
+.role-badge {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  width: fit-content;
+
+  &.owner {
+    background: rgba(0, 168, 150, 0.15);
+    color: #00a896;
+  }
+  &.manager {
+    background: rgba(67, 97, 238, 0.15);
+    color: #4361ee;
+  }
+  &.assistant_manager {
+    background: rgba(114, 9, 183, 0.15);
+    color: #7209b7;
+  }
+  &.team_leader {
+    background: rgba(247, 127, 0, 0.15);
+    color: #f77f00;
+  }
+  &.employee {
+    background: rgba(108, 117, 125, 0.15);
+    color: #6c757d;
+  }
+  &.admin {
+    background: rgba(239, 35, 60, 0.15);
+    color: #ef233c;
+  }
+}
+
+/* =========================
+   GRID
+   ========================= */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+
+  .password-card {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================
+   INFO CARDS
+   ========================= */
+.info-card {
+  border-radius: 16px !important;
+
+  mat-card-header {
+    margin-bottom: var(--space-lg);
+
+    mat-icon[mat-card-avatar] {
+      background: rgba(0, 168, 150, 0.12);
+      color: var(--principal-color);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    ::ng-deep .mat-mdc-card-header-text .mat-mdc-card-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  }
+}
+
+/* =========================
+   INFO GRID (dentro de la card)
+   ========================= */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &.full {
+      grid-column: 1 / -1;
+    }
+
+    .label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.45;
+      letter-spacing: 0.06em;
+    }
+
+    .value {
+      font-size: 0.97rem;
+      font-weight: 500;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      width: fit-content;
+      background: rgba(239, 35, 60, 0.1);
+      color: #ef233c;
+
+      &.active {
+        background: rgba(0, 168, 150, 0.1);
+        color: #00a896;
+      }
+    }
+  }
+}
+
+/* =========================
+   PASSWORD FORM
+   ========================= */
+.password-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-md);
+  align-items: start;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .submit-btn {
+    grid-column: 1 / -1;
+    height: 48px;
+    border-radius: 12px;
+    width: fit-content;
+    gap: var(--space-sm);
+
+    mat-spinner {
+      margin: auto;
+    }
+  }
+}
+
+/* =========================
+   DARK THEME
+   ========================= */
+:host-context(body[data-theme='dark']) {
+  .profile-page {
+    background:
+      radial-gradient(1000px 500px at 20% 0%, rgba(0, 168, 150, 0.08), transparent 55%),
+      transparent;
+  }
+
+  .info-card {
+    background: rgba(8, 14, 14, 0.7) !important;
+    border: 1px solid rgba(0, 168, 150, 0.15) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+/* =========================
+   LIGHT THEME
+   ========================= */
+:host-context(body[data-theme='light']) {
+  .info-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 51, 46, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+  }
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: var(--space-lg);
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+
+    .password-card {
+      grid-column: 1;
+    }
+  }
+
+  .password-form {
+    grid-template-columns: 1fr;
+  }
+}

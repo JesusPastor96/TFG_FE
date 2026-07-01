@@ -1,0 +1,88 @@
+@use '@angular/material' as mat;
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  @include mat.toolbar-overrides((
+    container-background-color: var(--secondary-color),
+    container-text-color: var(--principal-white),
+  ));
+  @include mat.icon-button-overrides((
+    icon-color: var(--principal-white)
+  ));
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1001;
+}
+
+.user-info-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .role-badge {
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &.role_admin { background: rgba(244, 67, 54, 0.2); border-color: #f44336; color: #ff8a80; }
+    &.role_owner { background: rgba(156, 39, 176, 0.2); border-color: #9c27b0; color: #e1bee7; }
+    &.role_manager { background: rgba(33, 150, 243, 0.2); border-color: #2196f3; color: #bbdefb; }
+    &.role_employee { background: rgba(76, 175, 80, 0.2); border-color: #4caf50; color: #c8e6c9; }
+  }
+
+  .welcome-text {
+    display: flex;
+    gap: 6px;
+    font-size: 0.95rem;
+
+    .hide-mobile {
+      opacity: 0.7;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--principal-white);
+    }
+  }
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.example-container {
+  width: auto;
+  height: calc(100vh - 64px); // Adjust based on mat-toolbar height
+  margin: 0;
+}
+
+mat-drawer {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0 !important;
+  padding: 0;
+  width: 260px;
+}
+
+@media (max-width: 768px) {
+  .welcome-text {
+    .hide-mobile {
+      display: none;
+    }
+  }
+
+  mat-toolbar {
+    padding: 0 12px;
+  }
+}

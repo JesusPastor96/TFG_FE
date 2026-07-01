@@ -1,0 +1,21 @@
+@if (data()) {
+  <div class="detail-container">
+    <div class="detail-header">
+      <h3>
+        <ng-content select="[detail-title]"></ng-content>
+      </h3>
+
+      <button mat-icon-button (click)="close.emit()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="detail-body">
+      <ng-content select="[detail-body]"></ng-content>
+    </div>
+
+    <div class="detail-actions">
+      <ng-content select="[detail-actions]"></ng-content>
+    </div>
+  </div>
+}

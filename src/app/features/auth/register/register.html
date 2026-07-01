@@ -1,0 +1,23 @@
+<div class="page-wrapper">
+
+  @if (!registrationSuccess()) {
+  <app-dynamic-form [fields]="fields" [title]="title" [subtitle]="subtitle" [submitLabel]="submitLabel"
+    (formSubmit)="onSubmit($event)">
+  </app-dynamic-form>
+  } @else {
+  <div class="success-card form-shell">
+    <mat-icon class="success-icon">check_circle_outline</mat-icon>
+    <h2 class="title">¡Registro Enviado!</h2>
+    <p class="subtitle">
+      Tu solicitud de registro para crear un restaurante ha sido enviada con éxito.
+      Un administrador revisará tu petición y, una vez aprobada, te enviaremos
+      un correo de confirmación.
+    </p>
+
+    <div class="actions">
+      <button mat-button class="btn-primary" routerLink="/auth/login">Volver al Login</button>
+    </div>
+  </div>
+  }
+
+</div>

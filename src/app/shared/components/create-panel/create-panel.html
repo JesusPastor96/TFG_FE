@@ -1,0 +1,15 @@
+<mat-accordion>
+  <mat-expansion-panel
+    [expanded]="expanded"
+    (expandedChange)="onExpandedChange($event)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title class="panel-title">
+        <mat-icon>add</mat-icon>
+        {{ title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ng-content></ng-content>
+  </mat-expansion-panel>
+</mat-accordion>

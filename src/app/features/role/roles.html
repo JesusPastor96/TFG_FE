@@ -1,0 +1,16 @@
+<div class="admin-main-container" [class.is-mobile]="screenSize.isMobile()">
+  <div class="admin-header">
+    <h2 class="admin-title">Gestión de Roles</h2>
+  </div>
+
+  <!-- <app-create-panel title="Añadir nuevo rol" [expanded]="showCreateForm">
+    <app-dynamic-form [fields]="roleFields" (formSubmit)="onCreateRole($event)"></app-dynamic-form>
+  </app-create-panel> -->
+
+  <app-dynamic-table
+    [data]="roles()"
+    [columns]="tableColumns"
+    [emptyMessage]="'No hay roles disponibles'"
+  >
+  </app-dynamic-table>
+</div>

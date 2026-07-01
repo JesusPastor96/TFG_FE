@@ -1,0 +1,59 @@
+<div class="table-wrapper">
+  <table mat-table [dataSource]="data">
+    @for (column of columns; track column.key) {
+      <ng-container [matColumnDef]="column.key">
+        <th mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [ngClass]="getCellClass(row, column)"
+        >
+          @if (column.type === 'badge') {
+            <span class="table-badge" [ngClass]="getBadgeClass(row, column)">
+              {{ getCellValue(row, column) }}
+            </span>
+          } @else {
+            {{ getCellValue(row, column) }}
+          }
+        </td>
+      </ng-container>
+    }
+
+    @if (actions.length > 0) {
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="table-actions">
+            @for (action of actions; track action.id) {
+              @if (isActionVisible(action, row)) {
+                <button
+                  mat-icon-button
+                  type="button"
+                  [matTooltip]="action.tooltip || ''"
+                  [disabled]="isActionDisabled(action, row)"
+                  (click)="onActionSelected(action.id, row, $event)"
+                >
+                  <mat-icon>{{ action.icon }}</mat-icon>
+                </button>
+              }
+            }
+          </div>
+        </td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [class.row-clickable]="rowClickable"
+      (click)="onRowSelected(row)"
+    ></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell empty-row" [attr.colspan]="displayedColumns.length">
+        {{ emptyMessage }}
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,15 @@
+.search-field {
+  width: 300px;
+
+  mat-icon {
+    margin-right: 8px;
+    color: var(--principal-color);
+  }
+}
+
+/* Responsive interno del componente */
+@media (max-width: 600px) {
+  .search-field {
+    width: 100%;
+  }
+}

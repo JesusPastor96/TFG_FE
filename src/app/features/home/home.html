@@ -1,0 +1,30 @@
+<div class="container responsive-grid">
+  @for (mod of modules; track mod.title) {
+  <mat-card class="example-card" [routerLink]="mod.route()">
+    <div class="image-container">
+      <img [src]="mod.image" [alt]="mod.title" class="module-card-img">
+    </div>
+
+    <div class="card-content-wrapper">
+      <mat-card-header>
+        <mat-card-title>{{ mod.title }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>{{ mod.description }}</p>
+      </mat-card-content>
+
+      <div class="card-footer-action">
+        <span>Acceder</span>
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </div>
+    </div>
+  </mat-card>
+  }
+
+  @if (modules.length === 0) {
+  <p style="grid-column: 1 / -1; margin: 0;">
+    No hay módulos disponibles para este perfil.
+  </p>
+  }
+</div>

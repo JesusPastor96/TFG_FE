@@ -1,0 +1,78 @@
+<mat-sidenav-container class="users-sidenav-container" [class.is-mobile]="screenSize.isMobile()">
+  <mat-sidenav
+    position="end"
+    mode="over"
+    [opened]="sidenavOpen()"
+    (closedStart)="closeSidenav()"
+    style="width: 420px"
+  >
+    <app-detail-view [data]="selectedAdmin()" (close)="closeSidenav()">
+      <div detail-title>
+        {{ selectedAdmin()?.username }}
+      </div>
+
+      <div detail-body>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">ID Administrador</span>
+            <span class="value">{{ selectedAdmin()?.idAdmin }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Nombre de Usuario</span>
+            <span class="value">{{ selectedAdmin()?.username }}</span>
+          </div>
+          <div class="info-item full">
+            <span class="label">Correo Electrónico</span>
+            <span class="value">{{ selectedAdmin()?.email }}</span>
+          </div>
+        </div>
+
+        <div class="view-actions" style="margin-top: 2rem;">
+          <button mat-flat-button color="warn" (click)="deleteAdmin(selectedAdmin()!.idAdmin)">
+            <mat-icon>delete</mat-icon>
+            Eliminar Administrador
+          </button>
+        </div>
+      </div>
+
+      <div detail-empty>
+        Selecciona un administrador para ver el detalle
+      </div>
+    </app-detail-view>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="admin-main-container">
+      <div class="admin-header">
+        <h2 class="admin-title">Lista de Administradores</h2>
+
+        <app-search-box
+          label="Buscar por nombre o email"
+          placeholder="Ej: Carlos"
+          (valueChange)="applyFilter($event)"
+        >
+        </app-search-box>
+      </div>
+
+      <app-create-panel
+        title="Añadir nuevo admin"
+        [expanded]="showCreateForm"
+        (expandedChange)="showCreateForm = $event"
+      >
+        <app-dynamic-form [fields]="adminFields" (formSubmit)="onCreateAdmin($event)">
+        </app-dynamic-form>
+      </app-create-panel>
+
+      <app-dynamic-table
+        [data]="admins()"
+        [columns]="tableColumns"
+        [actions]="tableActions"
+        [rowClickable]="true"
+        [emptyMessage]="'No hay administradores disponibles'"
+        (rowClick)="openSidenav($event)"
+        (actionClick)="onTableAction($event)"
+      >
+      </app-dynamic-table>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

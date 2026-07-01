@@ -1,0 +1,61 @@
+<mat-sidenav-container class="users-sidenav-container" [class.is-mobile]="screenSize.isMobile()">
+  <mat-sidenav
+    position="end"
+    mode="over"
+    [opened]="sidenavOpen()"
+    (closedStart)="closeSidenav()"
+    style="width: 420px"
+  >
+    <app-detail-view [data]="selectedRestaurant()" (close)="closeSidenav()">
+      <div detail-title>
+        {{ selectedRestaurant()?.restaurantName }}
+      </div>
+
+      <div detail-body>
+        <p><strong>Pertenece a:</strong> {{ selectedRestaurant()?.ownerName }}</p>
+        <p><strong>Dirección:</strong> {{ selectedRestaurant()?.address }}</p>
+        <p><strong>País:</strong> {{ selectedRestaurant()?.country }}</p>
+        <p><strong>Teléfono:</strong> {{ selectedRestaurant()?.phone }}</p>
+      </div>
+
+      <div detail-empty>Selecciona un restaurante para ver el detalle</div>
+    </app-detail-view>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="users-header">
+      <h2>Lista de Restaurantes</h2>
+
+      <app-search-box
+        label="Buscar por restaurante"
+        placeholder="Ej: Cucudrulu"
+        (valueChange)="applyFilter($event)"
+      >
+      </app-search-box>
+    </div>
+
+    @if (role() === 'ROLE_OWNER' && !hasRestaurant()) {
+      <app-create-panel title="Añadir nuevo restaurante" [expanded]="showCreateForm">
+        <app-dynamic-form
+          [fields]="restaurantFields"
+          [title]="'Añadir Restaurante'"
+          [subtitle]="'Rellena la información de tu restaurante'"
+          [submitLabel]="'Añadir Restaurante'"
+          (formSubmit)="onCreateRestaurant($event)"
+        >
+        </app-dynamic-form>
+      </app-create-panel>
+    }
+
+    <app-dynamic-table
+      [data]="restaurants()"
+      [columns]="tableColumns()"
+      [actions]="tableActions"
+      [rowClickable]="true"
+      [emptyMessage]="'No hay restaurantes disponibles'"
+      (rowClick)="openSidenav($event)"
+      (actionClick)="onTableAction($event)"
+    >
+    </app-dynamic-table>
+  </mat-sidenav-content>
+</mat-sidenav-container>

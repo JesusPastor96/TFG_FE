@@ -1,0 +1,73 @@
+@use './custom-theme.scss';
+
+:root {
+  --background: #fafffe;
+  --foreground: #00332e;
+  --card: #ffffff;
+  --card-foreground: #00332e;
+  --popover: #ffffff;
+  --popover-foreground: #00332e;
+  --primary: #00a896;
+  --primary-foreground: #fafffe;
+  --secondary: #f7f7f7;
+  --secondary-foreground: #00332e;
+  --muted: #f7f7f7;
+  --muted-foreground: #4a6b66;
+  --accent: #006b60;
+  --accent-foreground: #fafffe;
+  --destructive: #a80012;
+  --destructive-foreground: #fafffe;
+  --border: #d4e8e5;
+  --input: #d4e8e5;
+  --ring: #00a896;
+  --radius: 0.625rem;
+
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Base Tailwind-like Utility Classes (since we're not using Tailwind) */
+.landing-container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .landing-container { max-width: 640px; }
+}
+@media (min-width: 768px) {
+  .landing-container { max-width: 768px; }
+}
+@media (min-width: 1024px) {
+  .landing-container { max-width: 1024px; }
+}
+@media (min-width: 1280px) {
+  .landing-container { max-width: 1280px; }
+}
+@media (min-width: 1536px) {
+  .landing-container { max-width: 1536px; }
+}

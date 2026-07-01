@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" class="no-subscript search-field">
+  <mat-label>{{ label }}</mat-label>
+  <mat-icon matPrefix>search</mat-icon>
+
+  <input
+    matInput
+    [placeholder]="placeholder"
+    (input)="onInput(($any($event.target)).value)"
+  />
+</mat-form-field>

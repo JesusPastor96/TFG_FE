@@ -1,0 +1,124 @@
+<mat-sidenav-container class="users-sidenav-container" [class.is-mobile]="screenSize.isMobile()">
+    <mat-sidenav position="end" mode="over" [opened]="sidenavOpen()" (closedStart)="closeSidenav()"
+        style="width: 420px">
+        <app-detail-view [data]="selectedRequest()" (close)="closeSidenav()">
+            <div detail-title>
+                {{ selectedRequest()?.firstName }} {{ selectedRequest()?.lastName }}
+            </div>
+
+            <div detail-body>
+                <p><strong>Email: </strong> {{selectedRequest()?.email}} </p>
+                <p><strong>DNI: </strong> {{selectedRequest()?.dni}} </p>
+                <p><strong>Teléfono: </strong> {{selectedRequest()?.phone || 'No especificado'}} </p>
+                <p><strong>Mensaje: </strong> {{selectedRequest()?.message || 'Sin mensaje'}} </p>
+                <p><strong>Estado: </strong>
+                    <span class="status-badge" [ngClass]="'status-' + (selectedRequest()?.status | lowercase)">
+                        {{selectedRequest()?.status | uppercase}}
+                    </span>
+                </p>
+                <p><strong>Fecha Solicitud: </strong> {{selectedRequest()?.createdAt | date:'dd/MM/yyyy HH:mm'}} </p>
+            </div>
+
+            @if (selectedRequest()?.status === 'PENDING') {
+            <div detail-actions class="admission-actions">
+                <button mat-flat-button color="warn" (click)="onProcess(false)">
+                    <mat-icon>block</mat-icon>
+                    Rechazar
+                </button>
+                <button mat-flat-button color="primary" (click)="onProcess(true)">
+                    <mat-icon>check_circle</mat-icon>
+                    Aceptar
+                </button>
+            </div>
+            }
+
+            <div detail-empty>
+                Selecciona una solicitud para gestionar la admisión
+            </div>
+        </app-detail-view>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="users-header">
+            <h2>Gestión de Admisiones</h2>
+
+            <div class="filters-container">
+                <app-search-box label="Buscar solicitudes" placeholder="Ej: Jesus Pastor"
+                    (valueChange)="applyTextFilter($event)">
+                </app-search-box>
+
+                <mat-form-field appearance="outline" class="filter-field">
+                    <mat-label>Estado</mat-label>
+                    <mat-select [value]="statusFilter()" (selectionChange)="applyStatusFilter($event.value)">
+                        <mat-option value="ALL">Todos</mat-option>
+                        <mat-option value="PENDING">Pendientes</mat-option>
+                        <mat-option value="APPROVED">Aprobados</mat-option>
+                        <mat-option value="REJECTED">Rechazados</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="filter-field date-filter">
+                    <mat-label>Rango de fechas</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Inicio" (dateChange)="onStartDateChange($event)">
+                        <input matEndDate placeholder="Fin" (dateChange)="onEndDateChange($event)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table mat-table [dataSource]="requests()">
+                <ng-container matColumnDef="fullName">
+                    <th mat-header-cell *matHeaderCellDef>Solicitante</th>
+                    <td mat-cell *matCellDef="let request">
+                        {{ request.firstName }} {{ request.lastName }}
+                    </td>
+                </ng-container>
+
+                @if (!screenSize.isMobile()) {
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let request">{{ request.email }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef>DNI</th>
+                    <td mat-cell *matCellDef="let request">{{ request.dni }}</td>
+                </ng-container>
+                }
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Estado</th>
+                    <td mat-cell *matCellDef="let request">
+                        <span class="status-badge" [ngClass]="'status-' + (request.status | lowercase)">
+                            {{ request.status | uppercase }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Gestionar</th>
+                    <td mat-cell *matCellDef="let request">
+                        <button mat-icon-button (click)="openSidenav(request)">
+                            <mat-icon>rule</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns()"
+                    [ngClass]="'row-' + (row.status | lowercase)"></tr>
+            </table>
+
+            @if (requests().length === 0) {
+            <div class="empty-state">
+                <mat-icon>check_circle_outline</mat-icon>
+                <p>No hay solicitudes de admisión pendientes</p>
+            </div>
+            }
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

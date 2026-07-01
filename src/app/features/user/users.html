@@ -1,0 +1,84 @@
+<mat-sidenav-container class="users-sidenav-container" [class.is-mobile]="screenSize.isMobile()">
+  <mat-sidenav
+    position="end"
+    mode="over"
+    [opened]="sidenavOpen()"
+    (closedStart)="closeSidenav()"
+    style="width: 420px"
+  >
+    <app-detail-view [data]="selectedEmployee()" (close)="closeSidenav()">
+      <div detail-title>
+        {{ selectedEmployee()?.firstName }} {{ selectedEmployee()?.lastName }}
+      </div>
+
+      <div detail-body>
+        <p><strong>Email: </strong> {{ selectedEmployee()?.email }}</p>
+        <p><strong>DNI: </strong> {{ selectedEmployee()?.dni }}</p>
+        <p><strong>Rol: </strong> {{ selectedEmployee()?.role }}</p>
+        <p>
+          <strong>Restaurante: </strong>
+          {{ selectedEmployee() ? getRestaurantName(selectedEmployee()!) : 'No asignado' }}
+        </p>
+      </div>
+
+      <div detail-empty>
+        Selecciona un usuario para ver el detalle
+      </div>
+    </app-detail-view>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="users-header">
+      <h2>Lista de Usuarios</h2>
+
+      <div class="users-filters">
+        <app-search-box
+          label="Buscar por nombre o email"
+          placeholder="Ej: Carlos"
+          (valueChange)="applyFilter($event)"
+        >
+        </app-search-box>
+
+        <mat-form-field appearance="outline" class="role-filter no-subscript">
+          <mat-label>Filtrar por Rol</mat-label>
+          <mat-select (selectionChange)="onRoleFilterChange($event.value)" value="ALL">
+            <mat-option value="ALL">Todos los roles</mat-option>
+            <mat-option value="ROLE_OWNER">Owner</mat-option>
+            <mat-option value="ROLE_MANAGER">Manager</mat-option>
+            <mat-option value="ROLE_ASSISTANT_MANAGER">Assistant Manager</mat-option>
+            <mat-option value="ROLE_TEAM_LEADER">Team Leader</mat-option>
+            <mat-option value="ROLE_EMPLOYEE">Empleado</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    @if (role() === 'ROLE_ADMIN') {
+      <app-create-panel title="Añadir nuevo usuario" [expanded]="showCreateForm">
+        <app-dynamic-form
+          [fields]="ownerFields"
+          [initialValues]="initialOwnerData"
+          (formSubmit)="onCreateOwner($event)"
+        ></app-dynamic-form>
+      </app-create-panel>
+    } @else {
+      <app-create-panel title="Añadir nuevo usuario" [expanded]="showCreateForm">
+        <app-dynamic-form
+          [fields]="employeeFields"
+          (formSubmit)="onCreateEmployee($event)"
+        ></app-dynamic-form>
+      </app-create-panel>
+    }
+
+    <app-dynamic-table
+      [data]="employees()"
+      [columns]="tableColumns()"
+      [actions]="tableActions"
+      [rowClickable]="true"
+      [emptyMessage]="'No hay usuarios disponibles'"
+      (rowClick)="openSidenav($event)"
+      (actionClick)="onTableAction($event)"
+    >
+    </app-dynamic-table>
+  </mat-sidenav-content>
+</mat-sidenav-container>

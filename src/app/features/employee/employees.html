@@ -1,0 +1,112 @@
+<mat-sidenav-container class="users-sidenav-container" [class.is-mobile]="screenSize.isMobile()">
+  <mat-sidenav
+    position="end"
+    mode="over"
+    [opened]="sidenavOpen()"
+    (closedStart)="closeSidenav()"
+    style="width: 420px"
+  >
+    <app-detail-view [data]="selectedEmployee()" (close)="closeSidenav()">
+      <div detail-title>
+        {{ selectedEmployee()?.firstName }} {{ selectedEmployee()?.lastName }}
+      </div>
+
+      <div detail-body>
+        @if (!isEditingEmployee()) {
+          <div class="view-mode">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="label">DNI</span>
+                <span class="value">{{ selectedEmployee()?.dni }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Email</span>
+                <span class="value">{{ selectedEmployee()?.email }}</span>
+              </div>
+              <div class="info-item" *ngIf="canSeeSelectedSalary()">
+                <span class="label">Salario</span>
+                <span class="value">{{ selectedEmployee()?.hourlyWage }}€/h</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Rol</span>
+                <span class="value">
+                  {{ getRoleName(selectedEmployee()) }}
+                </span>
+              </div>
+            </div>
+
+            <div class="view-actions" *ngIf="canEditSelectedEmployee()">
+              <button mat-flat-button color="primary" (click)="toggleEdit()">
+                <mat-icon>edit</mat-icon>
+                Modificar Datos
+              </button>
+
+              @if (canDeleteSelectedEmployee()) {
+                <button
+                  mat-stroked-button
+                  color="warn"
+                  (click)="deleteEmployee(getEmployeeId(selectedEmployee()), true)"
+                >
+                  <mat-icon>delete</mat-icon>
+                  Eliminar
+                </button>
+              }
+            </div>
+          </div>
+        } @else {
+          <div class="edit-mode">
+            <app-dynamic-form
+              [fields]="editEmployeeFields"
+              [initialValues]="editInitialValues"
+              submitLabel="Guardar Cambios"
+              (formSubmit)="onUpdateEmployee($event)"
+            >
+            </app-dynamic-form>
+            <button mat-button class="cancel-btn" (click)="toggleEdit()">Cancelar</button>
+          </div>
+        }
+      </div>
+
+      <div detail-empty>
+        Selecciona un empleado para ver el detalle
+      </div>
+    </app-detail-view>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="users-header">
+      <div class="header-main">
+        <h2>Empleados de {{ restaurantName() }}</h2>
+      </div>
+
+      <app-search-box
+        label="Buscar empleado..."
+        placeholder="Nombre, email o DNI"
+        (valueChange)="applyFilter($event)"
+      >
+      </app-search-box>
+    </div>
+
+    <app-create-panel title="Añadir nuevo empleado" [(expanded)]="showCreateForm">
+      <app-dynamic-form
+        [fields]="employeeFields"
+        [title]="'Nuevo Empleado'"
+        [subtitle]="'Registra un nuevo miembro en tu equipo'"
+        [submitLabel]="'Crear Empleado'"
+        (formSubmit)="onCreateEmployee($event)"
+      >
+      </app-dynamic-form>
+    </app-create-panel>
+
+    <app-dynamic-table
+      [data]="filteredEmployees()"
+      [columns]="tableColumns()"
+      [actions]="tableActions"
+      [rowClickable]="true"
+      [emptyMessage]="'No se han encontrado empleados.'"
+      (rowClick)="openEmployeeDetail($event)"
+      (actionClick)="onTableAction($event)"
+    >
+    </app-dynamic-table>
+  </mat-sidenav-content>
+</mat-sidenav-container>

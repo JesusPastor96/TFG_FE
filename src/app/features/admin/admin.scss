@@ -1,0 +1,179 @@
+/* =========================
+   BASE & LAYOUT
+   ========================= */
+.users-sidenav-container {
+  min-height: 100vh;
+}
+
+:host ::ng-deep .mat-sidenav-content {
+  padding: var(--space-xxl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+
+  &.is-mobile {
+    padding: var(--space-md);
+    gap: var(--space-lg);
+  }
+}
+
+.admin-main-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-lg);
+}
+
+.admin-title {
+  margin: 0;
+  font-family: var(--font-principal);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-size: 2.15rem;
+  color: var(--principal-color);
+}
+
+/* =========================
+   TABLE STYLING (General)
+   ========================= */
+.table-wrapper {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+table[mat-table] {
+  width: 100%;
+  background: transparent !important;
+}
+
+/* =========================
+   SIDENAV & DETAIL VIEW
+   ========================= */
+:host ::ng-deep .mat-sidenav {
+  width: min(420px, 92vw);
+  border-radius: 14px 0 0 14px;
+  overflow: hidden;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &.full {
+      grid-column: 1 / -1;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.5;
+      letter-spacing: 0.05em;
+    }
+
+    .value {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.view-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+
+  button {
+    height: 48px;
+    border-radius: 12px;
+  }
+}
+
+/* =========================
+   DARK THEME
+   ========================= */
+:host-context(body[data-theme='dark']) {
+  .users-sidenav-container {
+    background:
+      radial-gradient(1200px 600px at 30% 0%, rgba(0, 168, 150, 0.1), transparent 55%),
+      linear-gradient(180deg, #0c1413 0%, #0a1010 100%);
+  }
+
+  .admin-title {
+    color: var(--principal-color);
+  }
+
+  :host ::ng-deep .mat-sidenav {
+    background: rgba(8, 14, 14, 0.92);
+    border-left: 1px solid rgba(0, 168, 150, 0.22);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.35);
+  }
+
+  .label {
+    color: rgba(250, 255, 254, 0.5);
+  }
+
+  .value {
+    color: rgba(250, 255, 254, 0.9);
+  }
+}
+
+/* =========================
+   LIGHT THEME
+   ========================= */
+:host-context(body[data-theme='light']) {
+  .users-sidenav-container {
+    background: linear-gradient(180deg, #f7fbfb 0%, #f2f7f7 100%);
+  }
+
+  :host ::ng-deep .mat-sidenav {
+    background: #ffffff;
+    border-left: 1px solid rgba(0, 51, 46, 0.1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .label {
+    color: rgba(0, 51, 46, 0.5);
+  }
+
+  .value {
+    color: rgba(0, 51, 46, 0.9);
+  }
+}
+
+/* --- Ajuste subscript (común) --- */
+::ng-deep .no-subscript .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+::ng-deep .no-subscript .mat-mdc-text-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+/* Éxito: Verde esmeralda */
+::ng-deep .snackbar-success {
+  --mdc-snackbar-container-color: #00a896;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  font-weight: 600;
+}
+
+/* Error: Rojo carmesí */
+::ng-deep .snackbar-error {
+  --mdc-snackbar-container-color: #a80012;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  font-weight: 600;
+}

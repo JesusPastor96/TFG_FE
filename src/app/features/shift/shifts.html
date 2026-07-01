@@ -1,0 +1,136 @@
+<div class="shift-main-container" [class.is-mobile]="screenSize.isMobile()">
+  <div class="shift-header">
+    <div>
+      <div class="shift-header-content">
+        <h2 class="shift-title">Gestión de turnos</h2>
+        <p class="shift-subtitle">Asignación actual de empleados por turno</p>
+
+@if (canManageShifts()) {
+<app-create-panel
+  title="Añadir nuevo turno"
+  [expanded]="showCreateShiftPanel"
+  (expandedChange)="showCreateShiftPanel = $event"
+>
+  <div class="shift-create-options">
+    @for (shiftType of getAvailableShiftTypesToCreate(); track shiftType) {
+      <button
+        mat-stroked-button
+        type="button"
+        class="shift-type-option"
+        (click)="createShift(shiftType)"
+      >
+        {{ formatShiftLabel(shiftType) }}
+      </button>
+    }
+  </div>
+</app-create-panel>
+}    
+</div>
+      <mat-menu #createShiftMenu="matMenu">
+        @for (shiftType of getAvailableShiftTypesToCreate(); track shiftType) {
+          <button mat-menu-item (click)="createShift(shiftType)">
+            {{ formatShiftLabel(shiftType) }}
+          </button>
+        }
+      </mat-menu>
+    </div>
+
+    <app-search-box
+      label="Buscar empleado"
+      placeholder="Ej: Juan"
+      (valueChange)="applyFilter($event)"
+    ></app-search-box>
+  </div>
+
+  <div class="shift-grid">
+    @for (group of shiftGroups() | keyvalue; track group.key) {
+      <div class="shift-card">
+        <div class="shift-card-header">
+          <h3 class="shift-card-title">{{ formatShiftLabel(group.key) }}</h3>
+
+          <div class="shift-card-actions">
+            <span class="shift-badge">{{ group.value.length }} empleados</span>
+
+            @if (group.key !== 'SIN ASIGNAR' && canManageShifts()) {
+              <button mat-icon-button [matMenuTriggerFor]="editShiftMenu" aria-label="Editar turno">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <mat-menu #editShiftMenu="matMenu">
+                @for (shiftType of shiftTypes; track shiftType) {
+                  @if (shiftType !== group.key) {
+                    <button mat-menu-item (click)="onUpdateShift(group.key, shiftType)">
+                      {{ formatShiftLabel(shiftType) }}
+                    </button>
+                  }
+                }
+              </mat-menu>
+
+              <button
+                mat-icon-button
+                aria-label="Eliminar turno"
+                (click)="onDeleteShift(group.key)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="shift-card-body">
+          @if (group.value.length > 0) {
+            <div class="employee-list">
+              @for (employee of group.value; track employee.idEmployee) {
+                <div class="employee-item">
+                  <div class="employee-info">
+                    <span class="employee-name">
+                      {{ employee.firstName }} {{ employee.lastName }}
+                    </span>
+
+                    <span class="employee-meta">
+                      {{ employee.role }} · {{ employee.restaurant || 'Sin restaurante' }}
+                    </span>
+                  </div>
+
+                  @if (canManageShifts()) {
+                    <button
+                      mat-icon-button
+                      [matMenuTriggerFor]="shiftMenu"
+                      class="employee-action-btn"
+                      aria-label="Cambiar turno"
+                    >
+                      <mat-icon>swap_horiz</mat-icon>
+                    </button>
+
+                    <mat-menu #shiftMenu="matMenu">
+                      @for (shift of availableShifts(); track shift.idShift) {
+                        @if (shift.assignShift !== employee.shift) {
+                          <button
+                            mat-menu-item
+                            (click)="changeEmployeeShift(employee.idEmployee, shift.idShift)"
+                          >
+                            {{ formatShiftLabel(shift.assignShift) }}
+                          </button>
+                        }
+                      }
+                      
+                      @if (employee.shift) {
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item (click)="unassignEmployee(employee.idEmployee)">
+                          <mat-icon>block</mat-icon>
+                          <span>Quitar de este turno</span>
+                        </button>
+                      }
+                    </mat-menu>
+                  }
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="empty-state">No hay empleados asignados</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

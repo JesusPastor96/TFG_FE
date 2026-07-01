@@ -1,0 +1,40 @@
+@if (puedeUsarChat()) {
+  <!-- Botón flotante -->
+  <button class="chat-btn" (click)="toggleChat()" title="Asistente virtual">
+    <span>💬</span>
+  </button>
+
+  <!-- Panel del chat -->
+  <div class="chat-panel" [class.abierto]="abierto()">
+    <div class="chat-header">
+      <div>
+        <strong>Asistente</strong>
+        <br>
+        <span>Pregunta sobre empleados y turnos</span>
+      </div>
+      <span class="cerrar" (click)="toggleChat()">✕</span>
+    </div>
+
+    <div class="chat-mensajes">
+      @for (mensaje of mensajes(); track $index) {
+        <div [class]="mensaje.tipo === 'usuario' ? 'mensaje-usuario' : 'mensaje-asistente'">
+          <div class="nombre">{{ mensaje.tipo === 'usuario' ? 'Tú' : 'Asistente' }}</div>
+          <div class="burbuja">{{ mensaje.texto }}</div>
+        </div>
+      }
+      @if (cargando()) {
+        <div class="cargando">Procesando tu consulta...</div>
+      }
+    </div>
+
+    <div class="chat-input">
+      <input 
+        type="text" 
+        [(ngModel)]="pregunta" 
+        placeholder="Escribe tu pregunta..."
+        (keydown)="onEnter($event)"
+        [disabled]="cargando()" />
+      <button (click)="enviarMensaje()" [disabled]="cargando()">Enviar</button>
+    </div>
+  </div>
+}

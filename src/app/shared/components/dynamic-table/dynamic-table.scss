@@ -1,0 +1,101 @@
+.table-wrapper {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+table[mat-table] {
+  width: 100%;
+  background: transparent !important;
+}
+
+button[mat-icon-button] {
+  border-radius: 12px;
+}
+
+.inactive-row {
+  opacity: 0.55;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.row-clickable {
+  cursor: pointer;
+}
+
+/* =========================
+   DARK THEME
+   ========================= */
+:host-context(body[data-theme='dark']) .table-wrapper {
+  background: rgba(8, 14, 14, 0.7);
+  border: 1px solid rgba(0, 168, 150, 0.18);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-header-row {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-header-cell {
+  color: rgba(250, 255, 254, 0.9) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid rgba(0, 168, 150, 0.35) !important;
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-cell {
+  color: rgba(250, 255, 254, 0.78) !important;
+  border-bottom: 1px solid rgba(0, 168, 150, 0.1) !important;
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-row:hover {
+  background: rgba(0, 168, 150, 0.06);
+}
+
+:host-context(body[data-theme='dark']) button[mat-icon-button] mat-icon {
+  color: rgba(250, 255, 254, 0.82);
+}
+
+:host-context(body[data-theme='dark']) .empty-row {
+  color: rgba(250, 255, 254, 0.65);
+}
+
+/* =========================
+   LIGHT THEME
+   ========================= */
+:host-context(body[data-theme='light']) .table-wrapper {
+  background: #ffffff;
+  border: 1px solid rgba(0, 51, 46, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-header-row {
+  background: rgba(0, 168, 150, 0.08);
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-header-cell {
+  color: rgba(0, 51, 46, 0.92) !important;
+  font-weight: 800 !important;
+  border-bottom: 2px solid rgba(0, 168, 150, 0.22) !important;
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-cell {
+  color: rgba(0, 51, 46, 0.86) !important;
+  border-bottom: 1px solid rgba(0, 168, 150, 0.12) !important;
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-row:hover {
+  background: rgba(0, 168, 150, 0.05);
+}
+
+:host-context(body[data-theme='light']) button[mat-icon-button] mat-icon {
+  color: rgba(0, 51, 46, 0.75);
+}
+
+:host-context(body[data-theme='light']) .empty-row {
+  color: rgba(0, 51, 46, 0.6);
+}

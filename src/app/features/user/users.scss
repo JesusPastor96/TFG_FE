@@ -1,0 +1,235 @@
+/* =========================
+   BASE
+   ========================= */
+.users-sidenav-container {
+  min-height: 100vh;
+}
+
+/* El padding lo ponemos en el content para no afectar al sidenav */
+:host ::ng-deep .mat-sidenav-content {
+  padding: var(--space-xxl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; // Cambiado a center para alinear título y filtros interactivos
+  gap: var(--space-lg);
+  flex-wrap: wrap; // Permite que los filtros caigan debajo del título en móviles
+}
+
+.users-filters {
+  display: flex;
+  align-items: center; // Alineamos el buscador y el select
+  gap: var(--space-md);
+  flex-wrap: wrap; // Permite que el selector caiga debajo del buscador si no hay espacio
+  
+  app-search-box {
+    margin: 0;
+  }
+}
+
+.role-filter {
+  width: 220px;
+  margin: 0; // Prevenir márgenes extra
+}
+
+.users-header h2 {
+  margin: 0;
+  font-family: var(--font-principal);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-size: 2.15rem;
+  color: var(--principal-color);
+}
+
+/* Panel */
+mat-accordion {
+  display: block;
+}
+
+mat-expansion-panel {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Header del panel */
+::ng-deep .mat-expansion-panel-header {
+  min-height: 64px;
+  padding: 0 var(--space-lg);
+}
+
+::ng-deep .mat-expansion-panel-header-title {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: var(--space-lg) !important;
+}
+
+::ng-deep .no-subscript .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+::ng-deep .no-subscript .mat-mdc-text-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+/* Tabla */
+.table-wrapper {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+table[mat-table] {
+  width: 100%;
+  background: transparent !important;
+}
+
+button[mat-icon-button] {
+  border-radius: 12px;
+}
+.inactive-row {
+  opacity: 0.55;
+}
+
+/* =========================
+   SIDENAV (panel derecho)
+   ========================= */
+:host ::ng-deep .mat-sidenav {
+  width: min(420px, 92vw);
+  border-radius: 14px 0 0 14px;
+  overflow: hidden;
+}
+
+/* =========================
+   DARK THEME
+   ========================= */
+:host-context(body[data-theme='dark']) .users-sidenav-container {
+  background: radial-gradient(
+      1200px 600px at 30% 0%,
+      rgba(0, 168, 150, 0.10),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #0c1413 0%, #0a1010 100%);
+}
+
+/* Panel dark */
+:host-context(body[data-theme='dark']) mat-expansion-panel {
+  background: rgba(8, 14, 14, 0.85);
+  border: 1px solid rgba(0, 168, 150, 0.28);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+:host-context(body[data-theme='dark']) ::ng-deep .mat-expansion-panel-header {
+  border-bottom: 1px solid rgba(0, 168, 150, 0.14);
+}
+
+:host-context(body[data-theme='dark']) ::ng-deep .mat-expansion-panel-header-title {
+  color: rgba(250, 255, 254, 0.92);
+}
+
+/* Tabla dark */
+:host-context(body[data-theme='dark']) .table-wrapper {
+  background: rgba(8, 14, 14, 0.70);
+  border: 1px solid rgba(0, 168, 150, 0.18);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-header-row {
+  background: rgba(0, 0, 0, 0.10);
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-header-cell {
+  color: rgba(250, 255, 254, 0.90) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid rgba(0, 168, 150, 0.35) !important;
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-cell {
+  color: rgba(250, 255, 254, 0.78) !important;
+  border-bottom: 1px solid rgba(0, 168, 150, 0.10) !important;
+}
+
+:host-context(body[data-theme='dark']) .mat-mdc-row:hover {
+  background: rgba(0, 168, 150, 0.06);
+}
+
+/* Iconos dark */
+:host-context(body[data-theme='dark']) button[mat-icon-button] mat-icon {
+  color: rgba(250, 255, 254, 0.82);
+}
+
+/* Sidenav dark */
+:host-context(body[data-theme='dark']) :host ::ng-deep .mat-sidenav {
+  background: rgba(8, 14, 14, 0.92);
+  border-left: 1px solid rgba(0, 168, 150, 0.22);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+   LIGHT THEME
+   ========================= */
+:host-context(body[data-theme='light']) .users-sidenav-container {
+  background: linear-gradient(180deg, #f7fbfb 0%, #f2f7f7 100%);
+}
+
+/* Panel light */
+:host-context(body[data-theme='light']) mat-expansion-panel {
+  background: #ffffff;
+  border: 1px solid rgba(0, 51, 46, 0.10);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+:host-context(body[data-theme='light']) ::ng-deep .mat-expansion-panel-header {
+  border-bottom: 1px solid rgba(0, 51, 46, 0.08);
+}
+
+:host-context(body[data-theme='light']) ::ng-deep .mat-expansion-panel-header-title {
+  color: rgba(0, 51, 46, 0.92);
+}
+
+/* Tabla light */
+:host-context(body[data-theme='light']) .table-wrapper {
+  background: #ffffff;
+  border: 1px solid rgba(0, 51, 46, 0.10);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-header-row {
+  background: rgba(0, 168, 150, 0.08);
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-header-cell {
+  color: rgba(0, 51, 46, 0.92) !important;
+  font-weight: 800 !important;
+  border-bottom: 2px solid rgba(0, 168, 150, 0.22) !important;
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-cell {
+  color: rgba(0, 51, 46, 0.86) !important;
+  border-bottom: 1px solid rgba(0, 168, 150, 0.12) !important;
+}
+
+:host-context(body[data-theme='light']) .mat-mdc-row:hover {
+  background: rgba(0, 168, 150, 0.05);
+}
+
+/* Iconos light */
+:host-context(body[data-theme='light']) button[mat-icon-button] mat-icon {
+  color: rgba(0, 51, 46, 0.75);
+}
+
+/* Sidenav light */
+:host-context(body[data-theme='light']) :host ::ng-deep .mat-sidenav {
+  background: #ffffff;
+  border-left: 1px solid rgba(0, 51, 46, 0.10);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
+}
