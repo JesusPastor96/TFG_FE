@@ -44,7 +44,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/TFG_FE
+          path: dist/TFG_FE/browser
 
       - name: Deploy to GitHub Pages
         id: deployment
